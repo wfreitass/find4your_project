@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\ApiResponseDTO;
+use App\Http\Requests\StoreFornecedorRequest;
 use App\Http\Resources\FornecedorResource;
 use App\Interfaces\BuscaCnpjServiceInterface;
 use App\Interfaces\FornecedorServiceInterface;
@@ -21,6 +22,10 @@ class FornecedorController extends Controller
      */
     protected FornecedorServiceInterface $forecedorService;
 
+    /**
+     *
+     * @var BuscaCnpjServiceInterface
+     */
     protected BuscaCnpjServiceInterface $buscaCnpjService;
 
 
@@ -56,8 +61,9 @@ class FornecedorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFornecedorRequest $request)
     {
+
         try {
             $fornecedor = $this->forecedorService->create($request->all());
             return ApiResponseDTO::success(data: FornecedorResource::collection($fornecedor->load(["enderecos", "telefones"])))->toJson();
