@@ -29,10 +29,11 @@ class FornecedorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filtros = $request->all();
         try {
-            return ApiResponseDTO::success(data: FornecedorResource::collection($this->forecedorService->all()))->toJson();
+            return ApiResponseDTO::success(data: FornecedorResource::collection($this->forecedorService->filters($filtros)))->toJson();
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
             return ApiResponseDTO::error(400, message: $th->getMessage())->toJson();

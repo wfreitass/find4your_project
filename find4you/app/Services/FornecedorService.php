@@ -23,9 +23,9 @@ class FornecedorService extends BaseService implements FornecedorServiceInterfac
     }
 
 
-    public function all()
+    public function filters(array $filtros)
     {
-        return $this->fornecedor->all();
+        return $this->fornecedor->filters($filtros);
     }
 
     public function create(array $data)
