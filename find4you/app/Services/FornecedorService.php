@@ -10,9 +10,9 @@ class FornecedorService extends BaseService implements FornecedorServiceInterfac
 {
     /**
      *
-     * @var Fornecedor
+     * @var FornecedorRepositoryInterface
      */
-    protected Fornecedor $fornecedor;
+    protected FornecedorRepositoryInterface $fornecedor;
 
 
     public function __construct(FornecedorRepositoryInterface $fornecedor)

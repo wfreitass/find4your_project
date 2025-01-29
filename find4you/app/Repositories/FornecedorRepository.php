@@ -11,7 +11,7 @@ class FornecedorRepository extends BaseRepository implements FornecedorRepositor
      *
      * @var Fornecedor
      */
-    protected Fornecedor $fornecedor;
+    protected  $fornecedor;
 
     /**
      *

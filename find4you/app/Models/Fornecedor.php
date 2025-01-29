@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Fornecedor extends Model
 {
+
+    /**
+     *
+     * @var string
+     */
+    protected $table = "fornecedores";
+
     /**
      * The attributes that are mass assignable.
      *
