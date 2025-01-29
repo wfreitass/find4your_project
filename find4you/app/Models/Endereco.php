@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Endereco extends Model
 {
@@ -20,4 +21,14 @@ class Endereco extends Model
         'numero',
         'logradouro',
     ];
+
+    /**
+     *
+     * @return BelongsTo
+     * 
+     */
+    public function fornecedor(): BelongsTo
+    {
+        return $this->belongsTo(Fornecedor::class);
+    }
 }

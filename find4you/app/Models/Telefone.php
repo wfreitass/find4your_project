@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Telefone extends Model
 {
@@ -17,4 +18,14 @@ class Telefone extends Model
         'fornecedor_id',
         'telefone',
     ];
+
+    /**
+     *
+     * @return BelongsTo
+     * 
+     */
+    public function fornecedor(): BelongsTo
+    {
+        return $this->belongsTo(Fornecedor::class);
+    }
 }
