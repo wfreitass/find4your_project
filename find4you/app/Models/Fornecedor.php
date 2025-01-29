@@ -40,7 +40,7 @@ class Fornecedor extends Model
      * @return HasMany
      * 
      */
-    public function contatos(): HasMany
+    public function telefones(): HasMany
     {
         return $this->hasMany(Telefone::class);
     }

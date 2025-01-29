@@ -21,4 +21,20 @@ class FornecedorService extends BaseService implements FornecedorServiceInterfac
 
         parent::__construct($fornecedor);
     }
+
+
+    public function all()
+    {
+        return $this->fornecedor->all();
+    }
+
+    public function create(array $data)
+    {
+        return $this->fornecedor->create($data);
+    }
+
+    public function update($tarefa, array $data)
+    {
+        return $this->fornecedor->update($tarefa, $data);
+    }
 }

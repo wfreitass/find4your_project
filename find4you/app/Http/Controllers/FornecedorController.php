@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\DTOs\ApiResponseDTO;
 use App\Http\Resources\FornecedorResource;
 use App\Interfaces\FornecedorServiceInterface;
+use App\Models\Fornecedor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class FornecedorController extends Controller
 {
@@ -31,6 +34,7 @@ class FornecedorController extends Controller
         try {
             return ApiResponseDTO::success(data: FornecedorResource::collection($this->forecedorService->all()))->toJson();
         } catch (\Throwable $th) {
+            Log::error($th->getMessage());
             return ApiResponseDTO::error(400, message: $th->getMessage())->toJson();
         }
     }
@@ -48,7 +52,13 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $fornecedor = $this->forecedorService->create($request->all());
+            return ApiResponseDTO::success(data: FornecedorResource::collection($fornecedor->load(["enderecos", "telefones"])))->toJson();
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return ApiResponseDTO::error(400, message: $th->getMessage())->toJson();
+        }
     }
 
     /**
@@ -70,16 +80,27 @@ class FornecedorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Fornecedor $fornecedor)
     {
-        //
+        try {
+            $fornecedor = $this->forecedorService->update($fornecedor->id, $request->all());
+            return ApiResponseDTO::success(201, data: new FornecedorResource($fornecedor->load(["enderecos", "telefones"])))->toJson();
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return ApiResponseDTO::error(400, message: $th->getMessage())->toJson();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Fornecedor $fornecedor)
     {
-        //
+        try {
+            $this->forecedorService->delete($fornecedor->id);
+            return ApiResponseDTO::success()->toJson();
+        } catch (\Throwable $th) {
+            return ApiResponseDTO::success(400, message: $th->getMessage())->toJson();
+        }
     }
 }
