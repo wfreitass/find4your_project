@@ -17,3 +17,5 @@ Route::prefix('auth')->group(function (): void {
 
 
 Route::middleware(['auth:api'])->resource('fornecedor', FornecedorController::class);
+Route::get('buscacnpj/{cnpj}', [FornecedorController::class, 'buscaCnpj'])
+    ->middleware('auth:api');

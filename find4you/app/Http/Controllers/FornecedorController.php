@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\DTOs\ApiResponseDTO;
 use App\Http\Resources\FornecedorResource;
+use App\Interfaces\BuscaCnpjServiceInterface;
 use App\Interfaces\FornecedorServiceInterface;
 use App\Models\Fornecedor;
+use App\Services\BuscaCnpjService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -19,10 +21,13 @@ class FornecedorController extends Controller
      */
     protected FornecedorServiceInterface $forecedorService;
 
+    protected BuscaCnpjServiceInterface $buscaCnpjService;
 
-    public function __construct(FornecedorServiceInterface $forecedorService)
+
+    public function __construct(FornecedorServiceInterface $forecedorService, BuscaCnpjService $buscaCnpjService)
     {
         $this->forecedorService = $forecedorService;
+        $this->buscaCnpjService = $buscaCnpjService;
     }
 
 
@@ -102,6 +107,17 @@ class FornecedorController extends Controller
             return ApiResponseDTO::success()->toJson();
         } catch (\Throwable $th) {
             return ApiResponseDTO::success(400, message: $th->getMessage())->toJson();
+        }
+    }
+
+
+    public function buscaCnpj($cnpj)
+    {
+        try {
+            return ApiResponseDTO::success(data: $this->buscaCnpjService->buscaCnpj($cnpj))->toJson();
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return ApiResponseDTO::error(400, message: $th->getMessage())->toJson();
         }
     }
 }
